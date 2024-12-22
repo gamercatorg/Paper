@@ -5,10 +5,10 @@ Subject: [PATCH] Entity#fromMobSpawner()
 
 
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 7e0ec58ea1d23501f0273882ebae8e45513b02cf..d794ed97bd14c67584af9190bad7d0cd07001b05 100644
+index 45d408f519767785b222c409170bbfecbd8d1931..ca81360956276047602958949148b6a70cc3e954 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -673,5 +673,12 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -805,5 +805,12 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @Nullable
      Location getOrigin();

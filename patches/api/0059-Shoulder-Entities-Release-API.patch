@@ -5,10 +5,10 @@ Subject: [PATCH] Shoulder Entities Release API
 
 
 diff --git a/src/main/java/org/bukkit/entity/HumanEntity.java b/src/main/java/org/bukkit/entity/HumanEntity.java
-index 0ab94ddd3b88eee8040233a89823bd2fadc78d55..396092fd249928ca01133eeeeb61f0ad90b2e332 100644
+index c90a0a00be78200adf217e2b3a8302b59af3cf7c..b4452d18a530c4c4a9bc10f368aeced9430b42a2 100644
 --- a/src/main/java/org/bukkit/entity/HumanEntity.java
 +++ b/src/main/java/org/bukkit/entity/HumanEntity.java
-@@ -315,6 +315,26 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, InventoryHolder
+@@ -377,6 +377,26 @@ public interface HumanEntity extends LivingEntity, AnimalTamer, InventoryHolder
       */
      public int getExpToLevel();
  

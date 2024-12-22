@@ -1,17 +1,60 @@
+import java.util.Locale
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
-rootProject.name = "Paper"
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
+}
 
-include("Paper-API", "Paper-Server", "Paper-MojangAPI")
+if (!file(".git").exists()) {
+    val errorText = """
+        
+        =====================[ ERROR ]=====================
+         The Paper project directory is not a properly cloned Git repository.
+         
+         In order to build Paper from source you must clone
+         the Paper repository using Git, not download a code
+         zip from GitHub.
+         
+         Built Paper jars are available for download at
+         https://papermc.io/downloads/paper
+         
+         See https://github.com/PaperMC/Paper/blob/master/CONTRIBUTING.md
+         for further information on building and modifying Paper.
+        ===================================================
+    """.trimIndent()
+    error(errorText)
+}
 
-val testPlugin = file("test-plugin.settings.gradle.kts")
-if (testPlugin.exists()) {
-    apply(from = testPlugin)
-} else {
-    testPlugin.writeText("// Uncomment to enable the test plugin module\n//include(\":test-plugin\")\n")
+rootProject.name = "paper"
+
+for (name in listOf("Paper-API", "Paper-Server")) {
+    val projName = name.lowercase(Locale.ENGLISH)
+    include(projName)
+    file(name).mkdirs()
+    findProject(":$projName")!!.projectDir = file(name)
+}
+
+optionalInclude("test-plugin")
+optionalInclude("paper-api-generator")
+
+fun optionalInclude(name: String, op: (ProjectDescriptor.() -> Unit)? = null) {
+    val settingsFile = file("$name.settings.gradle.kts")
+    if (settingsFile.exists()) {
+        apply(from = settingsFile)
+        findProject(":$name")?.let { op?.invoke(it) }
+    } else {
+        settingsFile.writeText(
+            """
+            // Uncomment to enable the '$name' project
+            // include(":$name")
+
+            """.trimIndent()
+        )
+    }
 }

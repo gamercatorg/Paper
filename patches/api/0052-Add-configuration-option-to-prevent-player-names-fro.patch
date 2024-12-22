@@ -6,10 +6,10 @@ Subject: [PATCH] Add configuration option to prevent player names from being
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 622aaf0786140059b81704763175773d8ea41952..c4be0ad6f4ddcceb4505a4bbe185605cf3d9e016 100644
+index 5660aa59d33ef2387839b9a67637672e6412088e..29e13fd7c94c5c50e81b804e6dffc8721164f1d1 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1888,6 +1888,16 @@ public final class Bukkit {
+@@ -2412,6 +2412,16 @@ public final class Bukkit {
      public static boolean reloadCommandAliases() {
          return server.reloadCommandAliases();
      }
@@ -27,10 +27,10 @@ index 622aaf0786140059b81704763175773d8ea41952..c4be0ad6f4ddcceb4505a4bbe185605c
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 861ec80f86ffcb4625e89887e2b752ea02716596..12e4b491ec9abfa16b304423942d9ecdee30f5c9 100644
+index 2c0e3ce1e6bb9602e1af11711b573f0080aa6f4c..4225105fef7aee264b34d1687762b5fc8dccbc47 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1660,4 +1660,14 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -2100,4 +2100,14 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
      void reloadPermissions(); // Paper
  
      boolean reloadCommandAliases(); // Paper
@@ -46,12 +46,12 @@ index 861ec80f86ffcb4625e89887e2b752ea02716596..12e4b491ec9abfa16b304423942d9ecd
 +    // Paper end
  }
 diff --git a/src/main/java/org/bukkit/command/Command.java b/src/main/java/org/bukkit/command/Command.java
-index 03bdc1622791e1206406c87065978688d602e39e..7c80dc54776d0d66f7816b77136f6dbd9b801704 100644
+index cee16db367907cfa4b432dc6969f403321a855ea..0ee08b6cd80e72ae67e1316ddbb58b7c1d47e5ce 100644
 --- a/src/main/java/org/bukkit/command/Command.java
 +++ b/src/main/java/org/bukkit/command/Command.java
-@@ -99,7 +99,7 @@ public abstract class Command {
-         Validate.notNull(args, "Arguments cannot be null");
-         Validate.notNull(alias, "Alias cannot be null");
+@@ -107,7 +107,7 @@ public abstract class Command {
+         Preconditions.checkArgument(args != null, "Arguments cannot be null");
+         Preconditions.checkArgument(alias != null, "Alias cannot be null");
  
 -        if (args.length == 0) {
 +        if (args.length == 0 || !sender.getServer().suggestPlayerNamesWhenNullTabCompletions()) { // Paper - allow preventing player name suggestions by default) {

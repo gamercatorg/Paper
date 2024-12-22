@@ -5,7 +5,7 @@ Subject: [PATCH] Add BaseComponent sendMessage methods to CommandSender
 
 
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index 7c9a0c85c0e23d6a569c3583e87b005938923d95..39ce012fcf2b22471a2ace9218f4f696ec93f466 100644
+index 70fec73328227725f519af845ecbdce8be2fa4e2..04e7cd0e4e2d0eb38fb2862ce6688a4470f30d6b 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
 @@ -1,6 +1,9 @@
@@ -18,9 +18,9 @@ index 7c9a0c85c0e23d6a569c3583e87b005938923d95..39ce012fcf2b22471a2ace9218f4f696
  import org.bukkit.Server;
  import org.bukkit.permissions.Permissible;
  import org.jetbrains.annotations.NotNull;
-@@ -124,5 +127,33 @@ public interface CommandSender extends net.kyori.adventure.audience.Audience, Pe
-     default void sendMessage(final @NotNull net.kyori.adventure.identity.Identity identity, final @NotNull net.kyori.adventure.text.Component message, final @NotNull net.kyori.adventure.audience.MessageType type) {
-         this.sendMessage(org.bukkit.Bukkit.getUnsafe().legacyComponentSerializer().serialize(message));
+@@ -168,5 +171,33 @@ public interface CommandSender extends net.kyori.adventure.audience.Audience, Pe
+     default void sendPlainMessage(final @NotNull String message) {
+         this.sendMessage(net.kyori.adventure.text.Component.text(message));
      }
 +
 +    /**
